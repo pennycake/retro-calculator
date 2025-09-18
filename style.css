@@ -1,0 +1,214 @@
+/* DSEG7 Classic Font */
+@font-face {
+    font-family: 'DSEG7Classic';
+    src: url('fonts/DSEG7Classic-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Reset and base styles */
+/* Wave animation for hello easter egg */
+@keyframes wave {
+    0% { transform: rotate(180deg); opacity: 0; }
+    1% { transform: rotate(180deg); opacity: 1; }
+    25% { transform: rotate(160deg); opacity: 1; }
+    50% { transform: rotate(180deg); opacity: 1; }
+    75% { transform: rotate(200deg); opacity: 1; }
+    100% { transform: rotate(180deg); opacity: 1; }
+}
+
+/* Easter egg animation container */
+.wave-container {
+    position: absolute;
+    right: 165px; /* Aligns with the open bracket position */
+    top: 15%; /* Aligned with output numbers */
+    transform: translateY(-50%);
+    font-size: 40px; /* Increased size */
+    display: none;
+    /* Ensure container stays within display area */
+    z-index: 1;
+}
+
+/* Show and animate wave when triggered */
+.wave-container.active {
+    display: block;
+    animation: wave 1s infinite;
+    animation-delay: 0.5s; /* Delay before animation starts */
+    opacity: 0;
+    animation-fill-mode: forwards; /* Keep the final state */
+}
+
+@keyframes flip {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(180deg); }
+}
+
+@keyframes unflip {
+    0% { transform: rotate(180deg); }
+    100% { transform: rotate(0deg); }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #2b4d2d;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(to right bottom, #2b4d2d, #1a3524);
+    background-size: 20px 20px, 20px 20px, 100% 100%;
+    font-family: 'Courier New', monospace;
+    position: relative;
+}
+
+/* Vintage classroom elements */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: 
+        linear-gradient(90deg, 
+            rgba(139, 69, 19, 0.1) 0px, 
+            rgba(139, 69, 19, 0.1) 50px,
+            transparent 50px,
+            transparent 100px
+        ) 0 0,
+        linear-gradient(rgba(139, 69, 19, 0.2) 50%, transparent 100%);
+    background-size: 100px 100%, 100% 100%;
+    z-index: -1;
+}
+
+/* Calculator container */
+.calculator {
+    background-color: #807670;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    width: 320px;
+    border: 2px solid #555;
+}
+
+/* Display screen */
+.display {
+    background-color: #9ea885;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: right;
+    font-family: 'DSEG7Classic', monospace;
+    border: 3px inset #666;
+    position: relative; /* Added to contain absolute positioned children */
+    min-height: 4em; /* Prevent height changes when switching to letters */
+}
+
+#output {
+    font-size: 2em;
+    line-height: 1.5;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+/* Text transformation for letters */
+/* #output.text-counter-rotate {
+    transform: scale(-1, -1);
+    text-align: left;  Maintain same line-height when transformed 
+} */
+
+/* Button grid */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* Button styles */
+.btn {
+    padding: 15px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #d4d4d4;
+    color: #333;
+    font-family: 'Courier New', monospace;
+    transition: all 0.1s;
+    border: 2px outset #fff;
+}
+
+/* Button variations */
+.operator {
+    background-color: #f0a868;
+    color: #fff;
+}
+
+.equals {
+    background-color: #7fb2c2;
+    color: #fff;
+}
+
+.clear {
+    background-color: #e17055;
+    color: #fff;
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+/* Button hover and active states */
+.btn:hover {
+    filter: brightness(1.1);
+}
+
+.btn:active, .btn.active {
+    transform: scale(0.95);
+    border-style: inset;
+}
+
+/* Flip button styles */
+.flip-btn {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #807670;
+    border: 2px outset #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s;
+}
+
+.flip-btn:hover {
+    filter: brightness(1.1);
+}
+
+.flip-btn:active {
+    border-style: inset;
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Calculator flip animation classes */
+.calculator.flipped {
+    animation: flip 0.5s forwards;
+}
+
+.calculator.unflipped {
+    animation: unflip 0.5s forwards;
+}
